@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Button } from '@material-ui/core';
@@ -8,60 +8,64 @@ const App: React.FC = () => {
 
   console.log(companies);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className='App'>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
         <Button
           variant='contained'
-          onClick={() => fetch('http://localhost:5000/companies')
-          .then((res) => res.json())
-          .then((data) => setCompanies(data))
-          .catch((err) => console.error(err))
-        }
+          onClick={() =>
+            fetch('http://localhost:5000/companies')
+              .then((res) => res.json())
+              .then((data) => setCompanies(data))
+              .catch((err) => console.error(err))
+          }
         >
           Get companies
         </Button>
 
-        <button
-          onClick={() => fetch('http://localhost:5000/employees')
-          .then((res) => res.json())
-          .then((data) => setCompanies(data))
-          .catch((err) => console.error(err))
-        }
+        <Button
+          onClick={() =>
+            fetch('http://localhost:5000/employees')
+              .then((res) => res.json())
+              .then((data) => setCompanies(data))
+              .catch((err) => console.error(err))
+          }
         >
           Get employees
-        </button>
+        </Button>
 
-        <button
-          onClick={() => fetch('http://localhost:5000/projects')
-          .then((res) => res.json())
-          .then((data) => setCompanies(data))
-          .catch((err) => console.error(err))
-        }
+        <Button
+          onClick={() =>
+            fetch('http://localhost:5000/projects')
+              .then((res) => res.json())
+              .then((data) => setCompanies(data))
+              .catch((err) => console.error(err))
+          }
         >
           Get projects
-        </button>
+        </Button>
 
-        <button
-          onClick={() => fetch('http://localhost:5000/company-addresses')
-          .then((res) => res.json())
-          .then((data) => setCompanies(data))
-          .catch((err) => console.error(err))
-        }
+        <Button
+          onClick={() =>
+            fetch('http://localhost:5000/company-addresses')
+              .then((res) => res.json())
+              .then((data) => setCompanies(data))
+              .catch((err) => console.error(err))
+          }
         >
           Get company addresses
-        </button>
+        </Button>
         <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+          className='App-link'
+          href='https://reactjs.org'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Learn React
         </a>
       </header>
     </div>
   );
-}
+};
 
 export default App;
