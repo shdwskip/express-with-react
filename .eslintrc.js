@@ -28,8 +28,6 @@ module.exports = {
     // Prettier plugin and recommended rules, basically take .prettierrc.js into account
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
-
-    // quality of life
     'plugin:jest/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
@@ -39,5 +37,16 @@ module.exports = {
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'no-undef': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 2,
+        '@typescript-eslint/no-var-requires': 1,
+      },
+    },
+  ],
 };

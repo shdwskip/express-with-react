@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import companiesReducer from './companiesReducer';
+import navigationNodesReducer from './navigationNodesReducer';
 
-export default combineReducers({
-  companies: companiesReducer,
+const rootReducer = combineReducers({
+  navNodes: navigationNodesReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;
