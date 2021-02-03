@@ -21,3 +21,8 @@ export interface RenderTree {
   type?: TreeNodeType;
   children?: RenderTree[];
 }
+
+export type ActionCreator = {
+  type: string;
+  payload?: unknown;
+};

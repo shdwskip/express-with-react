@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import {
   Grid,
   List,
@@ -10,27 +11,33 @@ import {
 } from '@material-ui/core';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 
+import { ProjectDetails } from '../';
+import { selectProject } from '../../actions';
 import { RootState } from '../../reducers';
-import useStyles from './Details.styles';
+import useStyles from './CompanyDetails.styles';
 
 const mapStateToProps = (state: RootState) => ({
   companyDetails: state.companyDetails,
+  selectedProject: state.projectDetails,
 });
 
-// const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
-//   bindActionCreators(
-//     {
-//       getNavgiationNodes,
-//       getCompanyDetails,
-//     },
-//     dispatch
-//   );
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      selectProject,
+    },
+    dispatch
+  );
 
-const connector = connect(mapStateToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const Details: React.FC<PropsFromRedux> = ({ companyDetails }) => {
+const CompanyDetails: React.FC<PropsFromRedux> = ({
+  companyDetails,
+  selectedProject,
+  selectProject,
+}) => {
   const classes = useStyles();
 
   if (!companyDetails.id) {
@@ -77,17 +84,28 @@ const Details: React.FC<PropsFromRedux> = ({ companyDetails }) => {
             </Typography>
           </Grid>
 
-          <Grid item xs={3}>
-            <List>
-              {companyDetails.projects.map((project) => (
-                <ListItem key={project.id} button>
-                  <ListItemIcon>
-                    <BusinessCenterIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={project.name} />
-                </ListItem>
-              ))}
-            </List>
+          <Grid container spacing={3}>
+            <Grid item xs={3}>
+              <List>
+                {companyDetails.projects.map((project) => (
+                  <ListItem
+                    key={project.id}
+                    button
+                    onClick={() => selectProject(project)}
+                    selected={selectedProject.id === project.id}
+                  >
+                    <ListItemIcon>
+                      <BusinessCenterIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={project.name} />
+                  </ListItem>
+                ))}
+              </List>
+            </Grid>
+
+            <Grid item xs={9}>
+              {selectedProject.id && <ProjectDetails data={selectedProject} />}
+            </Grid>
           </Grid>
         </Grid>
       )}
@@ -95,4 +113,4 @@ const Details: React.FC<PropsFromRedux> = ({ companyDetails }) => {
   );
 };
 
-export default connector(Details);
+export default connector(CompanyDetails);

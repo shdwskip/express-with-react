@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
-import { Drawer, Details } from '../';
+import { Drawer, CompanyDetails } from '../';
 
 import useStyles from './Layout.styles';
 
@@ -27,7 +27,7 @@ const Layout: React.FC = () => {
 
       <Container component='main' className={classes.content}>
         <div className={classes.toolbar} />
-        <Details />
+        <CompanyDetails />
       </Container>
     </div>
   );

@@ -13,11 +13,11 @@ export interface ICompanyAddress {
 }
 
 export interface ICompanyProject {
-  id: string;
-  name: string;
-  department: string;
-  employeesId: string[];
-  companyId: string;
+  id: string | null;
+  name: string | null;
+  department: string | null;
+  employeesId: string[] | [];
+  companyId: string | null;
 }
 
 export interface ICompanyDetails extends ICompany {
