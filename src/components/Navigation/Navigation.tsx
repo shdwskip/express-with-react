@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { TreeView as MuiTreeView, TreeItem } from '@material-ui/lab';
@@ -7,7 +7,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import PersonIcon from '@material-ui/icons/Person';
 
 import { RenderTree, TreeNodeType } from '../../common/generic.types';
-import { getNavgiationNodes } from '../../actions';
+import { getNavgiationNodes, getCompanyDetails } from '../../actions';
 import { RootState } from '../../reducers';
 
 import useStyles from './Navigation.styles';
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators(
     {
       getNavgiationNodes,
+      getCompanyDetails,
     },
     dispatch
   );
@@ -33,9 +34,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & {
   navigationNodes?: RenderTree[];
   getNavgiationNodes: typeof getNavgiationNodes;
+  getCompanyDetails: typeof getCompanyDetails;
 };
 
-const TreeView: React.FC<Props> = ({ navigationNodes, getNavgiationNodes }) => {
+const TreeView: React.FC<Props> = ({
+  navigationNodes,
+  getNavgiationNodes,
+  getCompanyDetails,
+}) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -51,6 +57,20 @@ const TreeView: React.FC<Props> = ({ navigationNodes, getNavgiationNodes }) => {
     []
   );
 
+  const handleItemClick = useCallback(
+    (itemType: TreeNodeType, itemId: string) => {
+      switch (itemType) {
+        case TreeNodeType.COMPANY:
+          getCompanyDetails(itemId);
+          break;
+
+        default:
+          break;
+      }
+    },
+    []
+  );
+
   const renderTree = (nodes: RenderTree[] | RenderTree) => {
     if (Array.isArray(nodes)) {
       return nodes.map((node) => (
@@ -60,9 +80,10 @@ const TreeView: React.FC<Props> = ({ navigationNodes, getNavgiationNodes }) => {
           label={node.name}
           icon={IconComponent[node.type]}
           className={classes.parentItem}
+          onClick={() => handleItemClick(node.type, node.id)}
         >
           {Array.isArray(node.children)
-            ? node.children.map((jobArea) => renderTree(jobArea))
+            ? node.children.map((childNode) => renderTree(childNode))
             : null}
         </TreeItem>
       ));
@@ -75,9 +96,10 @@ const TreeView: React.FC<Props> = ({ navigationNodes, getNavgiationNodes }) => {
         label={nodes.name}
         icon={IconComponent[nodes.type]}
         className={classes.childItem}
+        onClick={() => handleItemClick(nodes.type, nodes.id)}
       >
         {Array.isArray(nodes.children)
-          ? nodes.children.map((jobArea) => renderTree(jobArea))
+          ? nodes.children.map((childNode) => renderTree(childNode))
           : null}
       </TreeItem>
     );

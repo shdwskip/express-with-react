@@ -5,13 +5,14 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+const allCompanies = require('./data/companies.json');
+
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(express.static(path.join(__dirname, './data')));
 
 app.get('/navigation', (req, res) => {
   const TreeNodeType = require('./constants');
-  const allCompanies = require('./data/companies.json');
   const allEmployees = require('./data/employees.json');
 
   const navigationNodes = allCompanies.map((company) => {
@@ -55,8 +56,26 @@ app.get('/navigation', (req, res) => {
   res.send(navigationNodes);
 });
 
-app.get('/employees', (req, res) => {
-  res.sendFile(path.join(__dirname, './data/employees.json'));
+app.get('/company/:id', (req, res) => {
+  const requestedCompanyId = req.params.id;
+  const addresses = require('./data/company-addresses.json');
+  const projects = require('./data/projects.json');
+
+  const selectedCompany = allCompanies.find(
+    (company) => company.id === requestedCompanyId
+  );
+  const { id, companyId, ...companyAddress } = addresses.find(
+    (address) => address.companyId === requestedCompanyId
+  );
+  const companyProjects = projects.filter(
+    (project) => project.companyId === requestedCompanyId
+  );
+
+  res.send({
+    ...selectedCompany,
+    address: companyAddress,
+    projects: companyProjects,
+  });
 });
 
 app.get('/projects', (req, res) => {
