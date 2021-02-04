@@ -2,7 +2,6 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 import { Drawer, CompanyDetails } from '../';
@@ -25,10 +24,10 @@ const Layout: React.FC = () => {
 
       <Drawer />
 
-      <Container component='main' className={classes.content}>
+      <main className={classes.content}>
         <div className={classes.toolbar} />
         <CompanyDetails />
-      </Container>
+      </main>
     </div>
   );
 };

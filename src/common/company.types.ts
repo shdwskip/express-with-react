@@ -1,3 +1,5 @@
+import { IEmployee } from './employee.types';
+
 export interface ICompany {
   id: string | null;
   name: string | null;
@@ -23,4 +25,5 @@ export interface ICompanyProject {
 export interface ICompanyDetails extends ICompany {
   address: ICompanyAddress | null;
   projects: ICompanyProject[] | null;
+  employees: IEmployee[] | null;
 }

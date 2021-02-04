@@ -18,6 +18,7 @@ const initialState: CompanyDetailsState = {
   business: null,
   address: null,
   projects: null,
+  employees: null,
 };
 
 export default (
@@ -32,13 +33,7 @@ export default (
       };
     case GET_COMPANY_DETAILS_FAIL:
       return {
-        ...state,
-        id: null,
-        name: null,
-        slogan: null,
-        business: null,
-        address: null,
-        projects: null,
+        ...initialState,
       };
     default:
       return state;

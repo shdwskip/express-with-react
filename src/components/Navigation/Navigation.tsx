@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
 import { TreeView as MuiTreeView, TreeItem } from '@material-ui/lab';
@@ -43,6 +43,8 @@ const TreeView: React.FC<Props> = ({
   getCompanyDetails,
 }) => {
   const classes = useStyles();
+  const [expandedCompanyId, setExpandedCompanyId] = useState('');
+  const [expandedJobAreaId, setExpandedJobAreaId] = useState('');
 
   useEffect(() => {
     getNavgiationNodes();
@@ -62,13 +64,20 @@ const TreeView: React.FC<Props> = ({
       switch (itemType) {
         case TreeNodeType.COMPANY:
           getCompanyDetails(itemId);
+          setExpandedCompanyId(itemId === expandedCompanyId ? '' : itemId);
+          setExpandedJobAreaId('');
+          break;
+
+        case TreeNodeType.JOBAREA:
+          setExpandedJobAreaId(itemId === expandedJobAreaId ? '' : itemId);
           break;
 
         default:
+          setExpandedCompanyId(itemId === expandedCompanyId ? '' : itemId);
           break;
       }
     },
-    []
+    [expandedCompanyId, expandedJobAreaId]
   );
 
   const renderTree = (nodes: RenderTree[] | RenderTree) => {
@@ -106,7 +115,10 @@ const TreeView: React.FC<Props> = ({
   };
 
   return (
-    <MuiTreeView className={classes.root}>
+    <MuiTreeView
+      className={classes.root}
+      expanded={[expandedCompanyId, expandedJobAreaId]}
+    >
       {renderTree(navigationNodes)}
     </MuiTreeView>
   );

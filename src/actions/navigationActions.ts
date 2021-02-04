@@ -14,7 +14,7 @@ export const getNavgiationNodes = (): AppThunk => async (dispatch) => {
     // simulating response delay
     setTimeout(() => {
       dispatch({ type: GET_NAVIGATION_NODES_SUCCESS, payload: data });
-    }, 2000);
+    }, 1000);
   } catch (error) {
     dispatch({ type: GET_NAVIGATION_NODES_FAIL, payload: error });
   }

@@ -17,7 +17,7 @@ module.exports = {
       },
     },
   },
-  plugins: ['jest', 'import', '@typescript-eslint'],
+  plugins: ['jest', 'import', 'react-hooks', '@typescript-eslint'],
   extends: [
     'eslint:recommended', // esli110850
     'plugin:@typescript-eslint/eslint-recommended', // eslint TypeScript rules (github.com/typescript-eslint/typescript-eslint)
@@ -33,6 +33,8 @@ module.exports = {
     'plugin:import/warnings',
   ],
   rules: {
+    'react-hooks/rules-of-hooks': 'error', // ex: no conditional hooks
+    'react-hooks/exhaustive-deps': 'warn', // hook dependency checks
     'react/prop-types': 'off', // Turn off prop-types rule, as TypeScript's interfaces will be used instead.
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',

@@ -1,11 +1,12 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
-export default makeStyles(() => ({
+export default makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    padding: theme.spacing(2, 2, 0),
+    backgroundColor: theme.palette.background.default,
+    height: 300,
   },
-
-  textField: {
-    width: '100%',
+  fullHeight: {
+    height: '100%',
   },
 }));

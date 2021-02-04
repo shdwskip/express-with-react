@@ -7,4 +7,9 @@ export default makeStyles(() => ({
   addressContainer: {
     marginBottom: 20,
   },
+  listItem: {
+    '& > .MuiListItemIcon-root': {
+      paddingLeft: 8,
+    },
+  },
 }));

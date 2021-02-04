@@ -77,34 +77,44 @@ const CompanyDetails: React.FC<PropsFromRedux> = ({
       </Grid>
 
       {companyDetails.projects.length > 0 && (
-        <Grid container direction='column'>
-          <Grid item>
-            <Typography gutterBottom variant='h6' color='secondary'>
-              Projects:
-            </Typography>
-          </Grid>
-
-          <Grid container spacing={3}>
-            <Grid item xs={3}>
-              <List>
-                {companyDetails.projects.map((project) => (
-                  <ListItem
-                    key={project.id}
-                    button
-                    onClick={() => selectProject(project)}
-                    selected={selectedProject.id === project.id}
-                  >
-                    <ListItemIcon>
-                      <BusinessCenterIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={project.name} />
-                  </ListItem>
-                ))}
-              </List>
+        <Grid container>
+          <Grid container item direction='column'>
+            <Grid item>
+              <Typography gutterBottom variant='h6' color='secondary'>
+                Projects:
+              </Typography>
             </Grid>
 
-            <Grid item xs={9}>
-              {selectedProject.id && <ProjectDetails data={selectedProject} />}
+            <Grid container item spacing={3}>
+              <Grid item>
+                <List>
+                  {companyDetails.projects.map((project) => (
+                    <ListItem
+                      key={project.id}
+                      button
+                      disableGutters
+                      divider
+                      className={classes.listItem}
+                      onClick={() => selectProject(project)}
+                      selected={selectedProject.id === project.id}
+                    >
+                      <ListItemIcon>
+                        <BusinessCenterIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={project.name} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Grid>
+
+              <Grid item xs={9}>
+                {selectedProject.id && (
+                  <ProjectDetails
+                    data={selectedProject}
+                    companyEmployees={companyDetails.employees}
+                  />
+                )}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

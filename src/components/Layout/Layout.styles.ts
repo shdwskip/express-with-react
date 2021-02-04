@@ -7,6 +7,7 @@ export default makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       width: '100%',
+      minHeight: 800,
     },
     appBar: {
       width: `calc(100% - ${DRAWER_WIDTH})`,
@@ -17,7 +18,7 @@ export default makeStyles((theme: Theme) =>
       flexGrow: 1,
       margin: 0,
       backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(3),
+      padding: theme.spacing(3, 5),
     },
   })
 );

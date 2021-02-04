@@ -16,7 +16,7 @@ export const getCompanyDetails = (companyId: string): AppThunk => async (
     // simulating response delay
     setTimeout(() => {
       dispatch({ type: GET_COMPANY_DETAILS_SUCCESS, payload: data });
-    }, 2000);
+    }, 1000);
   } catch (error) {
     dispatch({ type: GET_COMPANY_DETAILS_FAIL, payload: error });
   }
