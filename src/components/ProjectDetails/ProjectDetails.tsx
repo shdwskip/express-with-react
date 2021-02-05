@@ -1,35 +1,58 @@
 import React, { useEffect, useMemo } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Grid, Paper, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import PersonIcon from '@material-ui/icons/Person';
+import { Button, Grid, Paper, TextField } from '@material-ui/core';
 
 import { ICompanyProject } from '../../common/company.types';
 import { IEmployee } from '../../common/employee.types';
+import { updateProjectDetails, IProjectDetailsPayload } from '../../actions';
 import useStyles from './ProjectDetails.styles';
-import { Autocomplete } from '@material-ui/lab';
 
-interface IProps {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+  bindActionCreators(
+    {
+      updateProjectDetails,
+    },
+    dispatch
+  );
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+interface IProps extends PropsFromRedux {
   data: ICompanyProject;
   companyEmployees: IEmployee[];
 }
 
-const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
+interface IFormData {
+  name: string;
+  department: string;
+  employees: IEmployee[];
+}
+
+const ProjectDetails: React.FC<IProps> = ({
+  data,
+  companyEmployees,
+  updateProjectDetails,
+}) => {
   const classes = useStyles();
 
-  const defaultValues = useMemo(
+  const defaultValues: IFormData = useMemo(
     () => ({
-      [`name-${data.id}`]: data.name,
-      [`department-${data.id}`]: data.department,
-      [`assignedEmployees-${data.id}`]: companyEmployees.filter(
-        (companyEmployee) =>
-          data.employeesId.find((id) => companyEmployee.id === id)
+      name: data.name,
+      department: data.department,
+      employees: companyEmployees.filter((companyEmployee) =>
+        data.employeesId.find((id) => companyEmployee.id === id)
       ),
     }),
     [companyEmployees, data]
   );
 
   const { register, reset, control, handleSubmit } = useForm({
-    ...defaultValues,
+    defaultValues,
   });
 
   useEffect(() => {
@@ -39,9 +62,9 @@ const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
   const ProjectEmployees = useMemo(
     () => (
       <Controller
-        name={`assignedEmployees-${data.id}`}
+        name='employees'
         control={control}
-        defaultValue={defaultValues[`assignedEmployees-${data.id}`]}
+        defaultValue={defaultValues.employees}
         render={({ onChange, value }) => (
           <Autocomplete
             fullWidth
@@ -70,11 +93,16 @@ const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
         )}
       />
     ),
-    [companyEmployees, control, data.id, defaultValues]
+    [companyEmployees, control, defaultValues]
   );
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = (formData: IFormData) => {
+    const { employees, ...payload } = formData;
+
+    payload['employeesId'] = employees.map((e) => e.id);
+    payload['id'] = data.id;
+
+    updateProjectDetails(payload as IProjectDetailsPayload);
   };
 
   return (
@@ -84,7 +112,7 @@ const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              name={`name-${data.id}`}
+              name='name'
               inputRef={register({ required: true })}
               label='Name'
               variant='outlined'
@@ -94,7 +122,7 @@ const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              name={`department-${data.id}`}
+              name='department'
               inputRef={register}
               label='Department'
               variant='outlined'
@@ -116,4 +144,4 @@ const ProjectDetails: React.FC<IProps> = ({ data, companyEmployees }) => {
   );
 };
 
-export default ProjectDetails;
+export default connector(ProjectDetails);

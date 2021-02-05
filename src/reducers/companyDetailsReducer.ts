@@ -1,12 +1,17 @@
 import {
   GET_COMPANY_DETAILS_FAIL,
   GET_COMPANY_DETAILS_SUCCESS,
+  IProjectDetailsPayload,
+  UPDATE_PROJECT_DETAILS_SUCCESS,
 } from '../actions';
 import { ICompanyDetails } from '../common/company.types';
 
 interface ICompanyDetailsAction {
-  type: typeof GET_COMPANY_DETAILS_SUCCESS | typeof GET_COMPANY_DETAILS_FAIL;
-  payload: ICompanyDetails;
+  type:
+    | typeof GET_COMPANY_DETAILS_SUCCESS
+    | typeof GET_COMPANY_DETAILS_FAIL
+    | typeof UPDATE_PROJECT_DETAILS_SUCCESS;
+  payload: ICompanyDetails | IProjectDetailsPayload;
 }
 
 type CompanyDetailsState = ICompanyDetails;
@@ -31,6 +36,22 @@ export default (
         ...state,
         ...action.payload,
       };
+
+    case UPDATE_PROJECT_DETAILS_SUCCESS: {
+      const { id } = action.payload;
+      const projects = [...state.projects];
+      const projectToUpdateIndex = projects.findIndex((p) => p.id === id);
+
+      projects[projectToUpdateIndex] = {
+        ...projects[projectToUpdateIndex],
+        ...action.payload,
+      };
+
+      return {
+        ...state,
+        projects,
+      };
+    }
     case GET_COMPANY_DETAILS_FAIL:
       return {
         ...initialState,

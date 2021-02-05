@@ -1,16 +1,20 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 const allCompanies = require('./data/companies.json');
 const allEmployees = require('./data/employees.json');
+const allProjects = require('./data/projects.json');
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use(express.static(path.join(__dirname, './data')));
+app.use(bodyParser.json());
 
 app.get('/navigation', (req, res) => {
   const TreeNodeType = require('./constants');
@@ -59,7 +63,6 @@ app.get('/navigation', (req, res) => {
 app.get('/company/:id', (req, res) => {
   const requestedCompanyId = req.params.id;
   const addresses = require('./data/company-addresses.json');
-  const projects = require('./data/projects.json');
 
   const selectedCompany = allCompanies.find(
     (company) => company.id === requestedCompanyId
@@ -67,7 +70,7 @@ app.get('/company/:id', (req, res) => {
   const { id, companyId, ...companyAddress } = addresses.find(
     (address) => address.companyId === requestedCompanyId
   );
-  const companyProjects = projects.filter(
+  const companyProjects = allProjects.filter(
     (project) => project.companyId === requestedCompanyId
   );
   const companyEmployees = allEmployees.filter(
@@ -80,6 +83,26 @@ app.get('/company/:id', (req, res) => {
     projects: companyProjects,
     employees: companyEmployees,
   });
+});
+
+app.put('/project/:id', (req, res) => {
+  console.log(req.params);
+  console.log(JSON.stringify(req.body));
+  const { id } = req.params;
+  const { name, department, employeesId } = req.body;
+  const filePath = path.join(__dirname, './data/projects.json');
+  const projectToUpdate = allProjects.find((p) => p.id === id);
+
+  projectToUpdate.name = name;
+  projectToUpdate.department = department;
+  projectToUpdate.employeesId = employeesId;
+
+  fs.writeFile(filePath, JSON.stringify(allProjects, null, 2), (err) => {
+    if (err) return console.log(err);
+    console.log('writing to ' + filePath);
+  });
+
+  res.sendStatus(200);
 });
 
 app.get('/projects', (req, res) => {

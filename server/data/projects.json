@@ -3,7 +3,9 @@
     "id": "eec9dfc5-3e34-4992-9751-f7d8c650f1de",
     "name": "Unbranded Frozen Car",
     "department": "Garden",
-    "employeesId": ["1504fe2c-325d-445b-9278-cdd23f6a1317"],
+    "employeesId": [
+      "1504fe2c-325d-445b-9278-cdd23f6a1317"
+    ],
     "companyId": "8cd78042-6990-483f-8d22-7a32e5c75606"
   },
   {
@@ -47,14 +49,18 @@
     "id": "f141ad2c-f662-42c6-bac8-8f957f97fdcd",
     "name": "Small Concrete Soap",
     "department": "Movies",
-    "employeesId": ["e59cf719-d9aa-4c19-b0cc-aebfb5ff02dc"],
+    "employeesId": [
+      "e59cf719-d9aa-4c19-b0cc-aebfb5ff02dc"
+    ],
     "companyId": "7903c9ba-d268-4daf-a47d-55b49697ad80"
   },
   {
     "id": "fb06024e-590a-455a-bf32-91bb12532b52",
     "name": "Sleek Rubber Shoes",
     "department": "Garden",
-    "employeesId": ["58c69299-ace4-47a9-b4f5-9374ee1d7c6e"],
+    "employeesId": [
+      "58c69299-ace4-47a9-b4f5-9374ee1d7c6e"
+    ],
     "companyId": "87815355-d092-428a-81f4-e3fd574056aa"
   },
   {
@@ -68,7 +74,9 @@
     "id": "fadfd649-c272-4dfc-9e1a-f697131c256b",
     "name": "Generic Cotton Keyboard",
     "department": "Shoes",
-    "employeesId": ["80d3d813-5918-443f-aff7-df4d98ddd86a"],
+    "employeesId": [
+      "80d3d813-5918-443f-aff7-df4d98ddd86a"
+    ],
     "companyId": "a2c39255-202a-4239-8a9f-5de62629ece0"
   },
   {
@@ -82,7 +90,9 @@
     "id": "fa9ef1d1-8265-42ba-8103-bc386c77770b",
     "name": "Small Wooden Salad",
     "department": "Clothing",
-    "employeesId": ["4dfa0ef2-9ca0-47ca-b029-672110496c04"],
+    "employeesId": [
+      "4dfa0ef2-9ca0-47ca-b029-672110496c04"
+    ],
     "companyId": "3c26ed77-821c-4fc8-91d3-034ccfdc2179"
   },
   {
@@ -124,7 +134,9 @@
     "id": "3b2cdbf6-3b30-49f7-9aa9-74adaa2ee42b",
     "name": "Sleek Rubber Computer",
     "department": "Computers",
-    "employeesId": ["929c292d-c36f-4902-93c6-7dc570ae6a6a"],
+    "employeesId": [
+      "929c292d-c36f-4902-93c6-7dc570ae6a6a"
+    ],
     "companyId": "b36b76d0-7743-4fe5-bf94-154779d8eb29"
   },
   {
@@ -151,7 +163,9 @@
     "id": "c370130e-931f-47ed-9444-8362d423281c",
     "name": "Handmade Cotton Chips",
     "department": "Kids",
-    "employeesId": ["e0453e35-632f-4e07-897d-3ccd4464fd14"],
+    "employeesId": [
+      "e0453e35-632f-4e07-897d-3ccd4464fd14"
+    ],
     "companyId": "a3a817cf-2f4e-4648-ab54-a75335e007e1"
   },
   {
@@ -193,7 +207,9 @@
     "id": "286a477e-6a35-41e7-9b00-9ac1dc5e610b",
     "name": "Licensed Concrete Towels",
     "department": "Beauty",
-    "employeesId": ["6fcaec11-b617-4398-bc10-ac6dd04c7c99"],
+    "employeesId": [
+      "6fcaec11-b617-4398-bc10-ac6dd04c7c99"
+    ],
     "companyId": "85dd621f-a149-435e-84c0-406fe23f7a2a"
   },
   {
@@ -248,7 +264,9 @@
     "id": "2f52fcbf-2c10-464b-b2f3-1688616f7312",
     "name": "Small Cotton Car",
     "department": "Grocery",
-    "employeesId": ["e4d8a7ed-5f38-4104-ab88-95a06c569578"],
+    "employeesId": [
+      "e4d8a7ed-5f38-4104-ab88-95a06c569578"
+    ],
     "companyId": "304d3f92-a8fb-4047-9a49-40c869a3052a"
   },
   {
@@ -289,7 +307,9 @@
     "id": "58883f29-5b86-4a97-ad64-4dc94965f2d1",
     "name": "Licensed Concrete Pants",
     "department": "Kids",
-    "employeesId": ["e0453e35-632f-4e07-897d-3ccd4464fd14"],
+    "employeesId": [
+      "e0453e35-632f-4e07-897d-3ccd4464fd14"
+    ],
     "companyId": "a3a817cf-2f4e-4648-ab54-a75335e007e1"
   },
   {
@@ -323,7 +343,9 @@
     "id": "e1bf820d-6dd0-4758-a15c-e0566102dd44",
     "name": "Refined Granite Shoes",
     "department": "Computers",
-    "employeesId": ["632e37cc-c8a2-4b0a-b04b-b72bb7d7beb6"],
+    "employeesId": [
+      "632e37cc-c8a2-4b0a-b04b-b72bb7d7beb6"
+    ],
     "companyId": "b36b76d0-7743-4fe5-bf94-154779d8eb29"
   },
   {
