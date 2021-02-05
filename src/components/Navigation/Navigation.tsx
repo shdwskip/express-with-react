@@ -7,7 +7,11 @@ import WorkIcon from '@material-ui/icons/Work';
 import PersonIcon from '@material-ui/icons/Person';
 
 import { RenderTree, TreeNodeType } from '../../common/generic.types';
-import { getNavgiationNodes, getCompanyDetails } from '../../actions';
+import {
+  getNavgiationNodes,
+  getCompanyDetails,
+  getEmployeeDetails,
+} from '../../actions';
 import { RootState } from '../../reducers';
 
 import useStyles from './Navigation.styles';
@@ -23,6 +27,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
     {
       getNavgiationNodes,
       getCompanyDetails,
+      getEmployeeDetails,
     },
     dispatch
   );
@@ -35,16 +40,19 @@ type Props = PropsFromRedux & {
   navigationNodes?: RenderTree[];
   getNavgiationNodes: typeof getNavgiationNodes;
   getCompanyDetails: typeof getCompanyDetails;
+  getEmployeeDetails: typeof getEmployeeDetails;
 };
 
 const TreeView: React.FC<Props> = ({
   navigationNodes,
   getNavgiationNodes,
   getCompanyDetails,
+  getEmployeeDetails,
 }) => {
   const classes = useStyles();
   const [expandedCompanyId, setExpandedCompanyId] = useState('');
   const [expandedJobAreaId, setExpandedJobAreaId] = useState('');
+  const [expandedEmployeeId, setExpandedEmployeeId] = useState('');
 
   useEffect(() => {
     getNavgiationNodes();
@@ -66,18 +74,24 @@ const TreeView: React.FC<Props> = ({
           getCompanyDetails(itemId);
           setExpandedCompanyId(itemId === expandedCompanyId ? '' : itemId);
           setExpandedJobAreaId('');
+          setExpandedEmployeeId('');
           break;
 
         case TreeNodeType.JOBAREA:
           setExpandedJobAreaId(itemId === expandedJobAreaId ? '' : itemId);
+          setExpandedEmployeeId('');
+          break;
+
+        case TreeNodeType.EMPLOYEE:
+          getEmployeeDetails(itemId);
+          setExpandedEmployeeId(itemId === expandedEmployeeId ? '' : itemId);
           break;
 
         default:
-          setExpandedCompanyId(itemId === expandedCompanyId ? '' : itemId);
           break;
       }
     },
-    [expandedCompanyId, expandedJobAreaId]
+    [expandedCompanyId, expandedJobAreaId, expandedEmployeeId]
   );
 
   const renderTree = (nodes: RenderTree[] | RenderTree) => {

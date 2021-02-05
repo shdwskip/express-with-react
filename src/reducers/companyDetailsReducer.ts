@@ -1,6 +1,7 @@
 import {
   GET_COMPANY_DETAILS_FAIL,
   GET_COMPANY_DETAILS_SUCCESS,
+  GET_EMPLOYEE_DETAILS_SUCCESS,
   IProjectDetailsPayload,
   UPDATE_PROJECT_DETAILS_SUCCESS,
 } from '../actions';
@@ -10,7 +11,8 @@ interface ICompanyDetailsAction {
   type:
     | typeof GET_COMPANY_DETAILS_SUCCESS
     | typeof GET_COMPANY_DETAILS_FAIL
-    | typeof UPDATE_PROJECT_DETAILS_SUCCESS;
+    | typeof UPDATE_PROJECT_DETAILS_SUCCESS
+    | typeof GET_EMPLOYEE_DETAILS_SUCCESS;
   payload: ICompanyDetails | IProjectDetailsPayload;
 }
 
@@ -52,6 +54,12 @@ export default (
         projects,
       };
     }
+
+    case GET_EMPLOYEE_DETAILS_SUCCESS:
+      return {
+        ...initialState,
+      };
+
     case GET_COMPANY_DETAILS_FAIL:
       return {
         ...initialState,

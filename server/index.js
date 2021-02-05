@@ -105,6 +105,22 @@ app.put('/project/:id', (req, res) => {
   res.sendStatus(200);
 });
 
+app.get('/employee/:id', (req, res) => {
+  const { id } = req.params;
+
+  const employeeDetails = allEmployees.find((e) => e.id === id);
+  const projects = allProjects.reduce((acc, curr) => {
+    const employeeExists = curr.employeesId.includes(id);
+    if (employeeExists) {
+      return [...acc, curr.name];
+    }
+
+    return acc;
+  }, []);
+
+  res.send({ ...employeeDetails, projects });
+});
+
 app.get('/projects', (req, res) => {
   res.sendFile(path.join(__dirname, './data/projects.json'));
 });

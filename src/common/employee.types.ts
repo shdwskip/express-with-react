@@ -7,4 +7,5 @@ export interface IEmployee {
   jobTitle: string;
   jobArea: string;
   jobType: string;
+  projects?: string[];
 }
