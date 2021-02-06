@@ -1,6 +1,7 @@
 import { AppThunk } from '../common/generic.types';
-import { SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
+import { apiURL, SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
 import store from '../store';
+import httpClient from '../httpClient';
 
 export const GET_EMPLOYEE_DETAILS_START = 'GET_EMPLOYEE_DETAILS_START';
 export const GET_EMPLOYEE_DETAILS_SUCCESS = 'GET_EMPLOYEE_DETAILS_SUCCESS';
@@ -19,9 +20,7 @@ export const getEmployeeDetails = (employeeId: string): AppThunk => async (
     dispatch({ type: GET_EMPLOYEE_DETAILS_START });
 
     try {
-      const result = await fetch(
-        `http://localhost:5000/employee/${employeeId}`
-      );
+      const result = await httpClient.get(`${apiURL.employees}/${employeeId}`);
       const data = await result.json();
 
       // simulating response delay

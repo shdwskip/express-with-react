@@ -60,7 +60,7 @@ app.get('/navigation', (req, res) => {
   res.send(navigationNodes);
 });
 
-app.get('/company/:id', (req, res) => {
+app.get('/companies/:id', (req, res) => {
   const requestedCompanyId = req.params.id;
   const addresses = require('./data/company-addresses.json');
 
@@ -85,7 +85,23 @@ app.get('/company/:id', (req, res) => {
   });
 });
 
-app.put('/project/:id', (req, res) => {
+app.get('/employees/:id', (req, res) => {
+  const { id } = req.params;
+
+  const employeeDetails = allEmployees.find((e) => e.id === id);
+  const projects = allProjects.reduce((acc, curr) => {
+    const employeeExists = curr.employeesId.includes(id);
+    if (employeeExists) {
+      return [...acc, curr.name];
+    }
+
+    return acc;
+  }, []);
+
+  res.send({ ...employeeDetails, projects });
+});
+
+app.post('/projects/:id', (req, res) => {
   console.log(req.params);
   console.log(JSON.stringify(req.body));
   const { id } = req.params;
@@ -103,22 +119,6 @@ app.put('/project/:id', (req, res) => {
   });
 
   res.sendStatus(200);
-});
-
-app.get('/employee/:id', (req, res) => {
-  const { id } = req.params;
-
-  const employeeDetails = allEmployees.find((e) => e.id === id);
-  const projects = allProjects.reduce((acc, curr) => {
-    const employeeExists = curr.employeesId.includes(id);
-    if (employeeExists) {
-      return [...acc, curr.name];
-    }
-
-    return acc;
-  }, []);
-
-  res.send({ ...employeeDetails, projects });
 });
 
 app.listen(PORT);

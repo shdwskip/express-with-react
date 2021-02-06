@@ -1,6 +1,7 @@
 import { ActionCreator, AppThunk } from '../common/generic.types';
 import { ICompanyProject } from '../common/company.types';
-import { SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
+import { apiURL, SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
+import httpClient from '../httpClient';
 
 export const SELECT_PROJECT = 'SELECT_PROJECT';
 export const UPDATE_PROJECT_DETAILS_START = 'UPDATE_PROJECT_DETAILS_START';
@@ -18,19 +19,14 @@ export interface IProjectDetailsPayload {
   department: string;
   employeesId: string[];
 }
+
 export const updateProjectDetails = (
   payload: IProjectDetailsPayload
 ): AppThunk => async (dispatch) => {
   dispatch({ type: UPDATE_PROJECT_DETAILS_START });
 
   try {
-    await fetch(`http://localhost:5000/project/${payload.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    await httpClient.post(`${apiURL.projects}/${payload.id}`, payload);
 
     // simulating response delay
     setTimeout(() => {
