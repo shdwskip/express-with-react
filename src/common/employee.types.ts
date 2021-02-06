@@ -9,3 +9,8 @@ export interface IEmployee {
   jobType: string;
   projects?: string[];
 }
+
+export interface IJobArea {
+  totalEmployees: number;
+  totalProjects: number;
+}

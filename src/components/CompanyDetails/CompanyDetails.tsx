@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import {
@@ -12,13 +12,15 @@ import {
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 
 import { ProjectDetails } from '../';
-import { selectProject } from '../../actions';
 import { RootState } from '../../reducers';
+import { selectProject } from '../../actions';
+import { TreeNodeType } from '../../common/generic.types';
 import useStyles from './CompanyDetails.styles';
 
 const mapStateToProps = (state: RootState) => ({
   companyDetails: state.companyDetails,
   selectedProject: state.projectDetails,
+  detailsViewType: state.detailsView.viewType,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -36,17 +38,26 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const CompanyDetails: React.FC<PropsFromRedux> = ({
   companyDetails,
   selectedProject,
+  detailsViewType,
   selectProject,
 }) => {
   const classes = useStyles();
 
-  if (!companyDetails.id) {
+  const shouldShowCompanyDetails = useMemo(
+    () => detailsViewType === TreeNodeType.COMPANY,
+    [detailsViewType]
+  );
+
+  if (!shouldShowCompanyDetails) {
     return null;
   }
 
   return (
     <Grid container>
-      <Typography variant='h5' className={classes.slogan}>
+      <Typography variant='h5' display='inline'>
+        Slogan:&nbsp;
+      </Typography>
+      <Typography variant='h5' className={classes.slogan} color='secondary'>
         {companyDetails.slogan}
       </Typography>
 

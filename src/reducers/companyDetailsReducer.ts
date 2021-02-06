@@ -1,9 +1,8 @@
 import {
-  GET_COMPANY_DETAILS_FAIL,
   GET_COMPANY_DETAILS_SUCCESS,
-  GET_EMPLOYEE_DETAILS_SUCCESS,
-  IProjectDetailsPayload,
+  GET_COMPANY_DETAILS_FAIL,
   UPDATE_PROJECT_DETAILS_SUCCESS,
+  IProjectDetailsPayload,
 } from '../actions';
 import { ICompanyDetails } from '../common/company.types';
 
@@ -11,8 +10,7 @@ interface ICompanyDetailsAction {
   type:
     | typeof GET_COMPANY_DETAILS_SUCCESS
     | typeof GET_COMPANY_DETAILS_FAIL
-    | typeof UPDATE_PROJECT_DETAILS_SUCCESS
-    | typeof GET_EMPLOYEE_DETAILS_SUCCESS;
+    | typeof UPDATE_PROJECT_DETAILS_SUCCESS;
   payload: ICompanyDetails | IProjectDetailsPayload;
 }
 
@@ -24,7 +22,7 @@ const initialState: CompanyDetailsState = {
   slogan: null,
   business: null,
   address: null,
-  projects: null,
+  projects: [],
   employees: null,
 };
 
@@ -55,15 +53,11 @@ export default (
       };
     }
 
-    case GET_EMPLOYEE_DETAILS_SUCCESS:
-      return {
-        ...initialState,
-      };
-
     case GET_COMPANY_DETAILS_FAIL:
       return {
         ...initialState,
       };
+
     default:
       return state;
   }

@@ -1,11 +1,16 @@
 import {
   GET_EMPLOYEE_DETAILS_FAIL,
   GET_EMPLOYEE_DETAILS_SUCCESS,
-} from '../actions/employeeActions';
+  UPDATE_PROJECT_DETAILS_SUCCESS,
+} from '../actions';
+
 import { IEmployee } from '../common/employee.types';
 
 interface IEmployeeDetailsAction {
-  type: typeof GET_EMPLOYEE_DETAILS_SUCCESS | typeof GET_EMPLOYEE_DETAILS_FAIL;
+  type:
+    | typeof GET_EMPLOYEE_DETAILS_SUCCESS
+    | typeof GET_EMPLOYEE_DETAILS_FAIL
+    | typeof UPDATE_PROJECT_DETAILS_SUCCESS;
   payload: IEmployee;
 }
 
@@ -32,6 +37,7 @@ export default (
         ...action.payload,
       };
 
+    case UPDATE_PROJECT_DETAILS_SUCCESS:
     case GET_EMPLOYEE_DETAILS_FAIL:
       return { ...initialState };
 

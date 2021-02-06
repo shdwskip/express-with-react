@@ -18,12 +18,12 @@ export interface ICompanyProject {
   id: string | null;
   name: string | null;
   department: string | null;
-  employeesId: string[] | [];
+  employeesId: string[];
   companyId: string | null;
 }
 
 export interface ICompanyDetails extends ICompany {
   address: ICompanyAddress | null;
-  projects: ICompanyProject[] | null;
-  employees: IEmployee[] | null;
+  projects: ICompanyProject[];
+  employees: IEmployee[];
 }

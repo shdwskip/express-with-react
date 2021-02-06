@@ -11,6 +11,7 @@ import {
   getNavgiationNodes,
   getCompanyDetails,
   getEmployeeDetails,
+  showJobAreaDetails,
 } from '../../actions';
 import { RootState } from '../../reducers';
 
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
       getNavgiationNodes,
       getCompanyDetails,
       getEmployeeDetails,
+      showJobAreaDetails,
     },
     dispatch
   );
@@ -41,6 +43,7 @@ type Props = PropsFromRedux & {
   getNavgiationNodes: typeof getNavgiationNodes;
   getCompanyDetails: typeof getCompanyDetails;
   getEmployeeDetails: typeof getEmployeeDetails;
+  showJobAreaDetails: typeof showJobAreaDetails;
 };
 
 const TreeView: React.FC<Props> = ({
@@ -48,6 +51,7 @@ const TreeView: React.FC<Props> = ({
   getNavgiationNodes,
   getCompanyDetails,
   getEmployeeDetails,
+  showJobAreaDetails,
 }) => {
   const classes = useStyles();
   const [expandedCompanyId, setExpandedCompanyId] = useState('');
@@ -56,6 +60,8 @@ const TreeView: React.FC<Props> = ({
 
   useEffect(() => {
     getNavgiationNodes();
+    // we only need to fetch the nodes ones the component mounts
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const IconComponent = useMemo(
@@ -68,32 +74,36 @@ const TreeView: React.FC<Props> = ({
   );
 
   const handleItemClick = useCallback(
-    (itemType: TreeNodeType, itemId: string) => {
-      switch (itemType) {
+    (item: RenderTree) => {
+      switch (item.type) {
         case TreeNodeType.COMPANY:
-          getCompanyDetails(itemId);
-          setExpandedCompanyId(itemId === expandedCompanyId ? '' : itemId);
+          getCompanyDetails(item.id);
+          setExpandedCompanyId(item.id);
           setExpandedJobAreaId('');
           setExpandedEmployeeId('');
           break;
 
         case TreeNodeType.JOBAREA:
-          setExpandedJobAreaId(itemId === expandedJobAreaId ? '' : itemId);
+          setExpandedJobAreaId(item.id);
           setExpandedEmployeeId('');
+          showJobAreaDetails(item.id, item.children);
           break;
 
         case TreeNodeType.EMPLOYEE:
-          getEmployeeDetails(itemId);
-          setExpandedEmployeeId(itemId === expandedEmployeeId ? '' : itemId);
+          getEmployeeDetails(item.id);
+          setExpandedEmployeeId(item.id);
           break;
 
         default:
           break;
       }
     },
+    // we only care when the id of the expanded items have changed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [expandedCompanyId, expandedJobAreaId, expandedEmployeeId]
   );
 
+  // TODO: create TreeItem component
   const renderTree = (nodes: RenderTree[] | RenderTree) => {
     if (Array.isArray(nodes)) {
       return nodes.map((node) => (
@@ -103,7 +113,7 @@ const TreeView: React.FC<Props> = ({
           label={node.name}
           icon={IconComponent[node.type]}
           className={classes.parentItem}
-          onClick={() => handleItemClick(node.type, node.id)}
+          onClick={() => handleItemClick(node)}
         >
           {Array.isArray(node.children)
             ? node.children.map((childNode) => renderTree(childNode))
@@ -119,7 +129,7 @@ const TreeView: React.FC<Props> = ({
         label={nodes.name}
         icon={IconComponent[nodes.type]}
         className={classes.childItem}
-        onClick={() => handleItemClick(nodes.type, nodes.id)}
+        onClick={() => handleItemClick(nodes)}
       >
         {Array.isArray(nodes.children)
           ? nodes.children.map((childNode) => renderTree(childNode))
