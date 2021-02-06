@@ -12,6 +12,20 @@ export default makeStyles((theme: Theme) =>
     appBar: {
       width: `calc(100% - ${DRAWER_WIDTH})`,
       marginLeft: DRAWER_WIDTH,
+      backgroundColor: '#d4de24',
+    },
+    title: {
+      color: '#699e3c',
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      letterSpacing: 5,
+
+      '&:nth-child(2)': {
+        fontStyle: 'normal',
+        letterSpacing: 'initial',
+        border: '4px solid',
+        padding: '0px 4px',
+      },
     },
     toolbar: theme.mixins.toolbar,
     content: {

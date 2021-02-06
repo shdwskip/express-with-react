@@ -28,10 +28,7 @@
   },
   "scripts": {
     "dev": "concurrently \"nodemon server/index.js\" \"react-scripts start\"",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test"
   },
   "browserslist": {
     "production": [
@@ -63,7 +60,6 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.2.1",
-    "redux-logger": "^3.0.6",
     "typescript": "^4.1.3"
   }
 }

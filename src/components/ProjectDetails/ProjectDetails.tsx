@@ -10,6 +10,10 @@ import { ICompanyProject } from '../../common/company.types';
 import { IEmployee } from '../../common/employee.types';
 import { updateProjectDetails, IProjectDetailsPayload } from '../../actions';
 import useStyles from './ProjectDetails.styles';
+import {
+  employeeNameValidationSchema,
+  departmentNameValidationSchema,
+} from '../../validations';
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators(
@@ -51,7 +55,8 @@ const ProjectDetails: React.FC<IProps> = ({
     [companyEmployees, data]
   );
 
-  const { register, reset, control, handleSubmit } = useForm({
+  const { register, reset, control, handleSubmit, errors } = useForm({
+    mode: 'onChange',
     defaultValues,
   });
 
@@ -113,9 +118,11 @@ const ProjectDetails: React.FC<IProps> = ({
             <TextField
               fullWidth
               name='name'
-              inputRef={register({ required: true })}
+              inputRef={register(employeeNameValidationSchema)}
               label='Name'
               variant='outlined'
+              error={!!errors.name}
+              helperText={errors.name?.message}
             />
           </Grid>
 
@@ -123,9 +130,11 @@ const ProjectDetails: React.FC<IProps> = ({
             <TextField
               fullWidth
               name='department'
-              inputRef={register}
+              inputRef={register(departmentNameValidationSchema)}
               label='Department'
               variant='outlined'
+              error={!!errors.department}
+              helperText={errors.department?.message}
             />
           </Grid>
 

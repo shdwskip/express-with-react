@@ -24,8 +24,11 @@ const Layout: React.FC = () => {
 
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
-          <Typography variant='h6' noWrap>
-            Company name
+          <Typography variant='h6' noWrap className={classes.title}>
+            PROJECT&nbsp;
+          </Typography>
+          <Typography variant='h6' noWrap className={classes.title}>
+            42
           </Typography>
         </Toolbar>
       </AppBar>
