@@ -1,8 +1,15 @@
-import { GET_COMPANY_DETAILS_START, SELECT_PROJECT } from '../actions';
+import {
+  GET_COMPANY_DETAILS_FROM_STORE,
+  GET_COMPANY_DETAILS_START,
+  SELECT_PROJECT,
+} from '../actions';
 import { ICompanyProject } from '../common/company.types';
 
 interface IProjectDetailsAction {
-  type: typeof SELECT_PROJECT | typeof GET_COMPANY_DETAILS_START;
+  type:
+    | typeof SELECT_PROJECT
+    | typeof GET_COMPANY_DETAILS_START
+    | typeof GET_COMPANY_DETAILS_FROM_STORE;
   payload: ICompanyProject;
 }
 
@@ -25,6 +32,7 @@ export default (
         ...action.payload,
       };
     case GET_COMPANY_DETAILS_START:
+    case GET_COMPANY_DETAILS_FROM_STORE:
       return { ...initialState };
     default:
       return state;

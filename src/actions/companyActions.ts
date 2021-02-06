@@ -1,4 +1,5 @@
 import { AppThunk } from '../common/generic.types';
+import { SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
 import store from '../store';
 
 export const GET_COMPANY_DETAILS_START = 'GET_COMPANY_DETAILS_START';
@@ -9,13 +10,13 @@ export const GET_COMPANY_DETAILS_FROM_STORE = 'GET_COMPANY_DETAILS_FROM_STORE';
 export const getCompanyDetails = (companyId: string): AppThunk => async (
   dispatch
 ) => {
-  dispatch({ type: GET_COMPANY_DETAILS_START });
-
   const { companyDetails } = store.getState();
 
   if (companyDetails.id === companyId) {
     dispatch({ type: GET_COMPANY_DETAILS_FROM_STORE });
   } else {
+    dispatch({ type: GET_COMPANY_DETAILS_START });
+
     try {
       const result = await fetch(`http://localhost:5000/company/${companyId}`);
       const data = await result.json();
@@ -23,7 +24,7 @@ export const getCompanyDetails = (companyId: string): AppThunk => async (
       // simulating response delay
       setTimeout(() => {
         dispatch({ type: GET_COMPANY_DETAILS_SUCCESS, payload: data });
-      }, 1000);
+      }, SIMULATED_LOADING_TIME_IN_MS);
     } catch (error) {
       dispatch({ type: GET_COMPANY_DETAILS_FAIL, payload: error });
     }

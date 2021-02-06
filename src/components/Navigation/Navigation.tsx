@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { TreeView as MuiTreeView, TreeItem } from '@material-ui/lab';
+import { TreeView, TreeItem } from '@material-ui/lab';
 import BusinessIcon from '@material-ui/icons/Business';
 import WorkIcon from '@material-ui/icons/Work';
 import PersonIcon from '@material-ui/icons/Person';
@@ -46,7 +46,7 @@ type Props = PropsFromRedux & {
   showJobAreaDetails: typeof showJobAreaDetails;
 };
 
-const TreeView: React.FC<Props> = ({
+const Navigation: React.FC<Props> = ({
   navigationNodes,
   getNavgiationNodes,
   getCompanyDetails,
@@ -103,7 +103,6 @@ const TreeView: React.FC<Props> = ({
     [expandedCompanyId, expandedJobAreaId, expandedEmployeeId]
   );
 
-  // TODO: create TreeItem component
   const renderTree = (nodes: RenderTree[] | RenderTree) => {
     if (Array.isArray(nodes)) {
       return nodes.map((node) => (
@@ -139,13 +138,13 @@ const TreeView: React.FC<Props> = ({
   };
 
   return (
-    <MuiTreeView
+    <TreeView
       className={classes.root}
       expanded={[expandedCompanyId, expandedJobAreaId]}
     >
       {renderTree(navigationNodes)}
-    </MuiTreeView>
+    </TreeView>
   );
 };
 
-export default connector(TreeView);
+export default connector(Navigation);

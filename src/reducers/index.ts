@@ -6,6 +6,7 @@ import projectDetailsReducer from './projectDetailsReducer';
 import employeeDetailsReducer from './employeeDetailsReducer';
 import jobAreaDetailsReducer from './jobAreaDetailsReducer';
 import detailsViewReducer from './detailsViewReducer';
+import loaderReducer from './loaderReducer';
 
 const rootReducer = combineReducers({
   navNodes: navigationNodesReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   employeeDetails: employeeDetailsReducer,
   jobAreaDetails: jobAreaDetailsReducer,
   detailsView: detailsViewReducer,
+  loader: loaderReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

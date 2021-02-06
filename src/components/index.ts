@@ -1,3 +1,4 @@
+export { default as BackdropLoader } from './BackdropLoader/BackdropLoader';
 export { default as CompanyDetails } from './CompanyDetails/CompanyDetails';
 export { default as Drawer } from './Drawer/Drawer';
 export { default as Layout } from './Layout/Layout';

@@ -1,5 +1,6 @@
 import { ActionCreator, AppThunk } from '../common/generic.types';
 import { ICompanyProject } from '../common/company.types';
+import { SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
 
 export const SELECT_PROJECT = 'SELECT_PROJECT';
 export const UPDATE_PROJECT_DETAILS_START = 'UPDATE_PROJECT_DETAILS_START';
@@ -31,7 +32,10 @@ export const updateProjectDetails = (
       },
     });
 
-    dispatch({ type: UPDATE_PROJECT_DETAILS_SUCCESS, payload });
+    // simulating response delay
+    setTimeout(() => {
+      dispatch({ type: UPDATE_PROJECT_DETAILS_SUCCESS, payload });
+    }, SIMULATED_LOADING_TIME_IN_MS);
   } catch (error) {
     dispatch({ type: UPDATE_PROJECT_DETAILS_FAIL, payload: error });
   }

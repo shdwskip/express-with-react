@@ -1,4 +1,5 @@
 import { AppThunk } from '../common/generic.types';
+import { SIMULATED_LOADING_TIME_IN_MS } from '../common/constants';
 
 export const GET_NAVIGATION_NODES_START = 'GET_NAVIGATION_NODES_START';
 export const GET_NAVIGATION_NODES_SUCCESS = 'GET_NAVIGATION_NODES_SUCCESS';
@@ -14,7 +15,7 @@ export const getNavgiationNodes = (): AppThunk => async (dispatch) => {
     // simulating response delay
     setTimeout(() => {
       dispatch({ type: GET_NAVIGATION_NODES_SUCCESS, payload: data });
-    }, 1000);
+    }, SIMULATED_LOADING_TIME_IN_MS);
   } catch (error) {
     dispatch({ type: GET_NAVIGATION_NODES_FAIL, payload: error });
   }

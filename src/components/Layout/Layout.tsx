@@ -4,7 +4,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { Drawer, CompanyDetails, JobAreaDetails, EmployeeDetails } from '../';
+import {
+  Drawer,
+  CompanyDetails,
+  JobAreaDetails,
+  EmployeeDetails,
+  BackdropLoader,
+} from '../';
 
 import useStyles from './Layout.styles';
 
@@ -14,6 +20,8 @@ const Layout: React.FC = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      <BackdropLoader />
+
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
           <Typography variant='h6' noWrap>
